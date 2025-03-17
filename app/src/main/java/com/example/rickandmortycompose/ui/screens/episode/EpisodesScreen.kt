@@ -1,4 +1,4 @@
-package com.example.rickandmortycompose.ui.screens
+package com.example.rickandmortycompose.ui.screens.episode
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -20,12 +20,12 @@ import androidx.compose.ui.unit.sp
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true)
 @Composable
-fun LocationsScreen(){
+fun EpisodesScreen(){
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text("LocationsScreen")
+                    Text("EpisodesScreen")
                 },
                 modifier = Modifier.background(Color.Red)
             )
@@ -40,7 +40,7 @@ fun LocationsScreen(){
             )
         {
             Text(
-                text = "LocationsScreen",
+                text = "EpisodesScreen",
                 fontSize = 20.sp
             )
         }

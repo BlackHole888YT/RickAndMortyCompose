@@ -19,10 +19,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.rickandmortycompose.R
 import com.example.rickandmortycompose.ui.model.CharactersData
-import com.example.rickandmortycompose.ui.screens.CharacterDetailScreen
-import com.example.rickandmortycompose.ui.screens.CharactersScreen
-import com.example.rickandmortycompose.ui.screens.EpisodesScreen
-import com.example.rickandmortycompose.ui.screens.LocationsScreen
+import com.example.rickandmortycompose.ui.screens.character.detail.CharacterDetailScreen
+import com.example.rickandmortycompose.ui.screens.character.CharactersScreen
+import com.example.rickandmortycompose.ui.screens.episode.EpisodesScreen
+import com.example.rickandmortycompose.ui.screens.location.LocationsScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true)

@@ -1,4 +1,4 @@
-package com.example.rickandmortycompose.ui.screens
+package com.example.rickandmortycompose.ui.screens.character
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
