@@ -1,4 +1,4 @@
-package com.example.rickandmortycompose.ui.model
+package com.example.rickandmortycompose.ui.model.character
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,12 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rickandmortycompose.R
+import com.example.rickandmortycompose.data.dto.characters.CharResults
 
 @Composable
-fun CharacterItem(character: CharactersData, onItemClick: (CharactersData) -> Unit) {
+fun CharacterItem(character: CharResults, onItemClick: (CharResults) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -66,29 +66,8 @@ fun CharacterItem(character: CharactersData, onItemClick: (CharactersData) -> Un
                     text = "Статус: ${character.status}",
                     color = Color.Cyan,
                     style = MaterialTheme.typography.bodyMedium,
-//                    color = when (character.status) {
-//                        Status.Alive -> {
-//                            Color.Green
-//                        }
-//                        Status.Dead -> {
-//                            Color.Red
-//                        }
-//                        else -> {
-//                            Color.Gray
-//                        }
-//                    }
-
                 )
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ShowCharacterScreen(){
-   CharacterItem(
-       onItemClick = {},
-       character = CharactersData("", "Name", "dead", "", "", "")
-   )
 }

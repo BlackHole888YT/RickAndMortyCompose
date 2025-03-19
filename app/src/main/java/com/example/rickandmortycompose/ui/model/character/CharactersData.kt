@@ -1,4 +1,4 @@
-package com.example.rickandmortycompose.ui.model
+package com.example.rickandmortycompose.ui.model.character
 
 data class CharactersData(
     var avatar: String? = null,
@@ -9,8 +9,3 @@ data class CharactersData(
     var location: String? = null,
 )
 
-//enum class Status{
-//    Dead,
-//    Alive,
-//    Unknown,
-//}

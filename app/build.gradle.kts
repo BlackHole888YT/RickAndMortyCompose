@@ -24,7 +24,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String","BASE_URL", "\"https://rickandmortyapi.com/api/\"")
+        }
         release {
+            buildConfigField("String","BASE_URL", "\"https://rickandmortyapi.com/api/\"")
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -40,6 +45,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -53,6 +59,35 @@ android {
 }
 
 dependencies {
+    //Live data
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    //Converter-gson
+    implementation(libs.converter.gson)
+
+    //Google Gson
+    implementation (libs.gson)
+
+    //OkHttp
+    // define a BOM and its version
+    implementation(platform(libs.okhttp.bom))
+    // define any required OkHttp artifacts without version
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    //Retrofit
+    implementation (libs.retrofit)
+
+    //Koin https://mvnrepository.com/artifact/io.insert-koin/
+    //koin-compose-viewmodel
+    runtimeOnly(libs.koin.compose.viewmodel)
+    //koin-androidx-compose-navigation
+    implementation(libs.koin.androidx.compose.navigation)
+    //koin-androidx-compose
+    runtimeOnly(libs.koin.androidx.compose)
+    //koin-android
+    implementation(libs.koin.android)
 
     //Serialization
     implementation(libs.kotlinx.serialization.json)
@@ -69,6 +104,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation("io.coil-kt:coil-compose:2.5.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

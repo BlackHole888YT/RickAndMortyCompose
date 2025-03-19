@@ -20,11 +20,19 @@ object Navigation {
     object EpisodesScreen
 
     @Serializable
-    object EpisodeDetailScreen
+    data class EpisodeDetailScreen(
+        var episName: String,
+        var episAirDate: String,
+        var episEpisode: String,
+    )
 
     @Serializable
     object LocationsScreen
 
     @Serializable
-    object LocationDetailScreen
+    data class LocationDetailScreen(
+        var locaName: String,
+        var locaType: String,
+        var locaDimension: String,
+    )
 }

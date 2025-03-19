@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
@@ -13,16 +14,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.rickandmortycompose.R
-import com.example.rickandmortycompose.ui.model.CharactersData
+import com.example.rickandmortycompose.ui.model.character.CharactersData
+import com.example.rickandmortycompose.ui.model.episode.EpisodesData
+import com.example.rickandmortycompose.ui.model.location.LocationsData
 import com.example.rickandmortycompose.ui.screens.character.detail.CharacterDetailScreen
 import com.example.rickandmortycompose.ui.screens.character.CharactersScreen
 import com.example.rickandmortycompose.ui.screens.episode.EpisodesScreen
+import com.example.rickandmortycompose.ui.screens.episode.detail.EpisodeDetailScreen
 import com.example.rickandmortycompose.ui.screens.location.LocationsScreen
+import com.example.rickandmortycompose.ui.screens.location.detail.LocationDetailScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true)
@@ -31,7 +37,9 @@ fun NavHostNavigation() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            BottomAppBar {
+            BottomAppBar(
+                modifier = Modifier.height(80.dp)
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -67,38 +75,42 @@ fun NavHostNavigation() {
         }
     ) { paddingValues ->
         NavHost(navController, Navigation.CharactersScreen, modifier = Modifier.padding(paddingValues)) {
+
             composable<Navigation.CharactersScreen> {
-                CharactersScreen(onItemClick = {
-                    it.name?.let { name ->
-                        it.status?.let { status ->
-                            it.kind?.let { kind ->
-                                it.sex?.let { sex ->
-                                    it.location?.let { location ->
-                                        it.avatar?.let { avatar ->
-                                            navController.navigate(
-                                                Navigation.CharacterDetailScreen(
-                                                    name,
-                                                    status,
-                                                    kind,
-                                                    sex,
-                                                    location,
-                                                    avatar
-                                                )
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //"characterDetail/${it.name}/${it.status}/${it.kind}/${it.sex}/${it.location}/${it.avatar}"
+                CharactersScreen(onItemClick = { character ->
+                    navController.navigate(
+                        Navigation.CharacterDetailScreen(
+                            charName = character.name,
+                            charStatus = character.status,
+                            charKind = character.species,
+                            charSex = character.gender,
+                            charLocation = character.location.name,
+                            charAvatar = character.image,
+                        )
+                    )
                 })
             }
             composable<Navigation.EpisodesScreen> {
-                EpisodesScreen()
+                EpisodesScreen(onEpisClick = { episode ->
+                    navController.navigate(
+                        Navigation.EpisodeDetailScreen(
+                            episName = episode.name,
+                            episAirDate = episode.air_date,
+                            episEpisode = episode.episode
+                        )
+                    )
+                })
             }
             composable<Navigation.LocationsScreen> {
-                LocationsScreen()
+                LocationsScreen(onLocaClick = {location ->
+                    navController.navigate(
+                        Navigation.LocationDetailScreen(
+                            locaName = location.name,
+                            locaType = location.type,
+                            locaDimension = location.dimension,
+                        )
+                    )
+                })
             }
 
             composable<Navigation.CharacterDetailScreen> {
@@ -115,10 +127,25 @@ fun NavHostNavigation() {
                 )
             }
             composable<Navigation.EpisodeDetailScreen> {
-                //EpisodesDetailScreen()
+                val args = it.toRoute<Navigation.EpisodeDetailScreen>()
+                EpisodeDetailScreen(
+                    EpisodesData(
+                        name = args.episName,
+                        airDate = args.episAirDate,
+                        episode = args.episEpisode,
+                    )
+                )
             }
+
             composable<Navigation.LocationDetailScreen> {
-                //LocationsDetailScreen()
+                val args = it.toRoute<Navigation.LocationDetailScreen>()
+                LocationDetailScreen(
+                    LocationsData(
+                        name = args.locaType,
+                        type = args.locaName,
+                        dimension = args.locaDimension
+                    )
+                )
             }
         }
     }

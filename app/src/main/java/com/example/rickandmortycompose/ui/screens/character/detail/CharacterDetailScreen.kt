@@ -14,8 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
-import com.example.rickandmortycompose.ui.model.CharactersData
-
+import com.example.rickandmortycompose.ui.model.character.CharactersData
 
 @Composable
 fun CharacterDetailScreen(character: CharactersData) {
@@ -30,7 +29,6 @@ fun CharacterDetailScreen(character: CharactersData) {
             modifier = Modifier.height(20.dp)
         )
 
-        // Картинка персонажа
         Image(
             painter = painterResource(id = R.drawable.ic_launcher_background),
             contentDescription = "Character Avatar",
@@ -41,11 +39,12 @@ fun CharacterDetailScreen(character: CharactersData) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Имя персонажа
-        Text(
-            text = character.name!!,
-            style = MaterialTheme.typography.headlineMedium
-        )
+        character.name?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.headlineMedium
+            )
+        }
         Spacer(
             modifier = Modifier.height(16.dp)
         )
@@ -54,13 +53,6 @@ fun CharacterDetailScreen(character: CharactersData) {
         Text(
             text = "Статус: ${character.status}",
             style = MaterialTheme.typography.bodyLarge,
-//            color = when (character.status) {
-//                Status.Alive -> Color.Green
-//                Status.Dead -> Color.Red
-//                else -> {
-//                    Color.Gray
-//                }
-//            }
             color = Color.Cyan
         )
 
@@ -93,7 +85,6 @@ fun CharacterDetailScreen(character: CharactersData) {
     }
 }
 
-// Превью экрана
 @Preview
 @Composable
 fun PreviewCharacterDetailScreen() {
@@ -102,7 +93,6 @@ fun PreviewCharacterDetailScreen() {
             avatar = "",
             name = "Rick Sanchez",
             status = "dead",
-//            status = Status.Alive,
             kind = "Human",
             sex = "Male",
             location = "Earth"
