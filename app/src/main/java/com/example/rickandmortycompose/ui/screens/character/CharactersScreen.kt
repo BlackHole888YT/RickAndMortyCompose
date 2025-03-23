@@ -14,8 +14,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -30,8 +31,12 @@ fun CharactersScreen(
     onItemClick: (CharResults) -> Unit,
     viewModel: CharactersViewModel = koinViewModel()
     ){
-    viewModel.fetchAllCharacters()
-    val characters by viewModel.charactersLiveData.observeAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchAllCharacters()
+    }
+
+    val characters by viewModel.charactersStateFlow.collectAsState()
 
     Scaffold(
         topBar = {
@@ -59,13 +64,11 @@ fun CharactersScreen(
                     .fillMaxSize()
                     .background(Color.LightGray)
             ) {
-                characters?.let { it ->
-                    items(
-                        items = it
-                    ) {
-                        CharacterItem(it) {
-                            onItemClick(it)
-                        }
+                items(
+                    items = characters
+                ) { it ->
+                    CharacterItem(it) {
+                        onItemClick(it)
                     }
                 }
 

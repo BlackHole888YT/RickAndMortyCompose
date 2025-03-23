@@ -35,4 +35,7 @@ object Navigation {
         var locaType: String,
         var locaDimension: String,
     )
+
+    @Serializable
+    object FavoritesCharScreen
 }

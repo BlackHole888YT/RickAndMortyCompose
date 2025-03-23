@@ -22,6 +22,8 @@ import com.example.rickandmortycompose.data.dto.locations.LocaResults
 import com.example.rickandmortycompose.ui.model.location.LocationItem
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,8 +33,12 @@ fun LocationsScreen(
     onLocaClick: (LocaResults) -> Unit,
     viewModel: LocationsViewModel = koinViewModel()
     ){
-    viewModel.fetchAllLocations()
-    val locations by viewModel.locationsLiveData.observeAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchAllLocations()
+    }
+
+    val locations by viewModel.locationsStateFlow.collectAsState()
 
     Scaffold(
         topBar = {
@@ -60,13 +66,11 @@ fun LocationsScreen(
                     .fillMaxSize()
                     .background(Color.LightGray)
             ) {
-                locations?.let { it ->
-                    items(
-                        items = it
-                    ) {
-                        LocationItem(it){
-                            onLocaClick(it)
-                        }
+                items(
+                    items = locations
+                ) { it ->
+                    LocationItem(it){
+                        onLocaClick(it)
                     }
                 }
             }

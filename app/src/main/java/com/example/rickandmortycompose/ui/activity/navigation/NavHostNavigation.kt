@@ -25,6 +25,7 @@ import com.example.rickandmortycompose.ui.model.episode.EpisodesData
 import com.example.rickandmortycompose.ui.model.location.LocationsData
 import com.example.rickandmortycompose.ui.screens.character.detail.CharacterDetailScreen
 import com.example.rickandmortycompose.ui.screens.character.CharactersScreen
+import com.example.rickandmortycompose.ui.screens.character.favorites.FavoritesCharScreen
 import com.example.rickandmortycompose.ui.screens.episode.EpisodesScreen
 import com.example.rickandmortycompose.ui.screens.episode.detail.EpisodeDetailScreen
 import com.example.rickandmortycompose.ui.screens.location.LocationsScreen
@@ -70,6 +71,14 @@ fun NavHostNavigation() {
                             contentDescription = "Button 3"
                         )
                     }
+                    IconButton(onClick = {
+                        navController.navigate(Navigation.FavoritesCharScreen)
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.star),
+                            contentDescription = "Button 4"
+                        )
+                    }
                 }
             }
         }
@@ -111,6 +120,10 @@ fun NavHostNavigation() {
                         )
                     )
                 })
+            }
+
+            composable<Navigation.FavoritesCharScreen> {
+                FavoritesCharScreen(listOf("ee", "ee"))
             }
 
             composable<Navigation.CharacterDetailScreen> {

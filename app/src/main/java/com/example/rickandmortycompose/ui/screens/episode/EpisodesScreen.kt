@@ -13,6 +13,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -28,8 +30,11 @@ fun EpisodesScreen(
     onEpisClick: (EpisResults) -> Unit,
     viewModel: EpisodesViewModel = koinViewModel()
 ) {
-    viewModel.fetchAllEpisodes()
-    val episodes by viewModel.episodesLiveData.observeAsState()
+    LaunchedEffect(Unit) {
+        viewModel.fetchAllEpisodes()
+    }
+
+    val episodes by viewModel.episodesStateFlow.collectAsState()
 
     Scaffold(
         topBar = {
@@ -52,13 +57,11 @@ fun EpisodesScreen(
                     .fillMaxSize()
                     .background(Color.LightGray)
             ) {
-                episodes?.let { it->
-                    items(
-                        items = it
-                    ) {
-                        EpisodeItem(it) {
-                            onEpisClick(it)
-                        }
+                items(
+                    items = episodes
+                ) { it ->
+                    EpisodeItem(it) {
+                        onEpisClick(it)
                     }
                 }
             }
