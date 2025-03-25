@@ -1,6 +1,7 @@
 package com.example.rickandmortycompose.ui.screens.character
 
 import android.annotation.SuppressLint
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.rickandmortycompose.data.dto.characters.CharResults
+import com.example.rickandmortycompose.room.FavoriteCharacterViewModel
 import com.example.rickandmortycompose.ui.model.character.CharacterItem
 import org.koin.androidx.compose.koinViewModel
 
@@ -67,9 +69,10 @@ fun CharactersScreen(
                 items(
                     items = characters
                 ) { it ->
-                    CharacterItem(it) {
-                        onItemClick(it)
-                    }
+                    CharacterItem(
+                        character = it,
+                        onItemClick = onItemClick
+                    )
                 }
 
             }

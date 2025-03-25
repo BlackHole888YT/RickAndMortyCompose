@@ -11,6 +11,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,6 +22,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.rickandmortycompose.R
+import com.example.rickandmortycompose.room.FavoriteCharacterViewModel
+import com.example.rickandmortycompose.room.model.RoomCharacter
 import com.example.rickandmortycompose.ui.model.character.CharactersData
 import com.example.rickandmortycompose.ui.model.episode.EpisodesData
 import com.example.rickandmortycompose.ui.model.location.LocationsData
@@ -30,12 +34,16 @@ import com.example.rickandmortycompose.ui.screens.episode.EpisodesScreen
 import com.example.rickandmortycompose.ui.screens.episode.detail.EpisodeDetailScreen
 import com.example.rickandmortycompose.ui.screens.location.LocationsScreen
 import com.example.rickandmortycompose.ui.screens.location.detail.LocationDetailScreen
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true)
 @Composable
 fun NavHostNavigation() {
     val navController = rememberNavController()
+    val favoriteViewModel: FavoriteCharacterViewModel = koinViewModel()
+    val favorites by favoriteViewModel.favorites.collectAsState(initial = emptyList())
+
     Scaffold(
         bottomBar = {
             BottomAppBar(
@@ -86,18 +94,20 @@ fun NavHostNavigation() {
         NavHost(navController, Navigation.CharactersScreen, modifier = Modifier.padding(paddingValues)) {
 
             composable<Navigation.CharactersScreen> {
-                CharactersScreen(onItemClick = { character ->
-                    navController.navigate(
-                        Navigation.CharacterDetailScreen(
-                            charName = character.name,
-                            charStatus = character.status,
-                            charKind = character.species,
-                            charSex = character.gender,
-                            charLocation = character.location.name,
-                            charAvatar = character.image,
+                CharactersScreen(
+                    onItemClick = { character ->
+                        navController.navigate(
+                            Navigation.CharacterDetailScreen(
+                                charName = character.name,
+                                charStatus = character.status,
+                                charKind = character.species,
+                                charSex = character.gender,
+                                charLocation = character.location.name,
+                                charAvatar = character.image,
+                            )
                         )
-                    )
-                })
+                    }
+                )
             }
             composable<Navigation.EpisodesScreen> {
                 EpisodesScreen(onEpisClick = { episode ->
@@ -123,7 +133,12 @@ fun NavHostNavigation() {
             }
 
             composable<Navigation.FavoritesCharScreen> {
-                FavoritesCharScreen(listOf("ee", "ee"))
+                FavoritesCharScreen(
+                    favorites = favorites.map { favorite -> favorite.toRoomCharacter() },
+                    onRemoveFavorite = { character ->
+                        favoriteViewModel.removeFavorite(character)
+                    }
+                )
             }
 
             composable<Navigation.CharacterDetailScreen> {
