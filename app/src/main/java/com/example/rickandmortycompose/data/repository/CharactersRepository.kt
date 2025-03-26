@@ -1,18 +1,26 @@
 package com.example.rickandmortycompose.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.example.rickandmortycompose.data.api.CharacterApiService
 import com.example.rickandmortycompose.data.dto.characters.CharResults
+import com.example.rickandmortycompose.data.paging3.pagingSource.CharacterPagingSource
 
 class CharactersRepository constructor(
     private val characterApiService: CharacterApiService
     ){
-    suspend fun fetchAllCharacters(): List<CharResults>{
-        val charResponse = characterApiService.fetchAllCharacters()
-
-        return if (charResponse.isSuccessful){
-            charResponse.body()!!.results
-        } else{
-            emptyList()
-        }
+    fun fetchAllCharacters(): Pager<Int, CharResults>{
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                prefetchDistance = 15,
+                initialLoadSize = 100,
+            ),
+            pagingSourceFactory = {
+                CharacterPagingSource(
+                    characterApiService
+                )
+            }
+        )
     }
 }

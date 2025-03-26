@@ -1,18 +1,26 @@
 package com.example.rickandmortycompose.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.example.rickandmortycompose.data.api.LocationsApiService
 import com.example.rickandmortycompose.data.dto.locations.LocaResults
+import com.example.rickandmortycompose.data.paging3.pagingSource.LocationPagingSource
 
 class LocationsRepository constructor(
     private val locationsApiService: LocationsApiService
     ){
-    suspend fun fetchAllCharacters(): List<LocaResults>{
-        val locaResponse = locationsApiService.fetchAllLocations()
-
-        return if (locaResponse.isSuccessful){
-            locaResponse.body()!!.results
-        } else{
-            emptyList()
-        }
+    fun fetchAllCharacters(): Pager<Int,LocaResults> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                prefetchDistance = 15,
+                initialLoadSize = 100,
+            ),
+            pagingSourceFactory = {
+                LocationPagingSource(
+                    locationsApiService
+                )
+            }
+        )
     }
 }
