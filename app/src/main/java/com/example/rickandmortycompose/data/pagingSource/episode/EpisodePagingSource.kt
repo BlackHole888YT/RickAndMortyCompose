@@ -1,5 +1,6 @@
-package com.example.rickandmortycompose.data.paging3.pagingSource
+package com.example.rickandmortycompose.data.pagingSource.episode
 
+import androidx.core.net.toUri
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.rickandmortycompose.data.api.EpisodesApiService
@@ -16,7 +17,9 @@ class EpisodePagingSource(
             val pageEpisNumber = params.key ?: 1
             val episResponse = episodesApiService.fetchAllEpisodes(pageEpisNumber)
             val prevEpisPage = if (pageEpisNumber > 0) pageEpisNumber - 1 else null
-            val nextEpisPage = if (episResponse.body()?.info?.next != null) pageEpisNumber + 1 else null
+            val nextEpisPage = if (episResponse.body()?.info?.next != null){
+                episResponse.body()?.info?.next?.toUri()?.getQueryParameter("page")?.toInt()
+            }else null
 
             LoadResult.Page(
                 data = episResponse.body()?.results ?: emptyList(),

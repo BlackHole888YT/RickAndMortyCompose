@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.example.rickandmortycompose.data.api.EpisodesApiService
 import com.example.rickandmortycompose.data.dto.episodes.EpisResults
-import com.example.rickandmortycompose.data.paging3.pagingSource.EpisodePagingSource
+import com.example.rickandmortycompose.data.pagingSource.episode.EpisodePagingSource
 
 class EpisodesRepository constructor(
     private val episodesApiService: EpisodesApiService

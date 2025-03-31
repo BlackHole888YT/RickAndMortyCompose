@@ -13,15 +13,29 @@ import androidx.compose.ui.unit.dp
 import com.example.rickandmortycompose.R
 import com.example.rickandmortycompose.ui.model.location.LocationsData
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LocationDetailScreen(location: LocationsData) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Gray)
-            .padding(16.dp),
+            .background(Color.Gray),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        CenterAlignedTopAppBar(
+            modifier = Modifier,
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Color.Black.copy(alpha = 0.3f)
+            ),
+            title = {
+                location.name?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
+            }
+        )
         Spacer(
             modifier = Modifier.height(20.dp)
         )
@@ -34,15 +48,6 @@ fun LocationDetailScreen(location: LocationsData) {
             tint = Color.Black
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        location.name?.let {
-            Text(
-                text = it,
-                style = MaterialTheme.typography.headlineMedium,
-                color = Color.Black
-            )
-        }
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(

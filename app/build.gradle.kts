@@ -59,6 +59,12 @@ android {
 }
 
 dependencies {
+    //Pull refresh
+    implementation("androidx.compose.material:material:1.7.8")
+
+    //Coil
+    implementation(libs.coil3.coil.compose)
+
     // Paging3
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)

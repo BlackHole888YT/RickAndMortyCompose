@@ -3,9 +3,9 @@ package com.example.rickandmortycompose.ui.screens.episode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.rickandmortycompose.data.dto.episodes.EpisResults
 import com.example.rickandmortycompose.data.repository.EpisodesRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -19,8 +19,8 @@ class EpisodesViewModel(
     val episodesStateFlow: StateFlow<PagingData<EpisResults>> get() = _episodesLiveData
 
     fun fetchAllEpisodes() {
-        viewModelScope.launch(Dispatchers.IO) {
-            episodesRepository.fetchAllCharacters().flow.collectLatest() {
+        viewModelScope.launch {
+            episodesRepository.fetchAllCharacters().flow.cachedIn(viewModelScope).collectLatest {
                 _episodesLiveData.value = it
             }
         }

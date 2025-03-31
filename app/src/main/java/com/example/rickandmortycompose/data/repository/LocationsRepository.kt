@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.example.rickandmortycompose.data.api.LocationsApiService
 import com.example.rickandmortycompose.data.dto.locations.LocaResults
-import com.example.rickandmortycompose.data.paging3.pagingSource.LocationPagingSource
+import com.example.rickandmortycompose.data.pagingSource.location.LocationPagingSource
 
 class LocationsRepository constructor(
     private val locationsApiService: LocationsApiService

@@ -1,5 +1,6 @@
-package com.example.rickandmortycompose.data.paging3.pagingSource
+package com.example.rickandmortycompose.data.pagingSource.location
 
+import androidx.core.net.toUri
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.rickandmortycompose.data.api.LocationsApiService
@@ -16,7 +17,9 @@ class LocationPagingSource(
             val pageLocaNumber = params.key ?: 1
             val locaResponse = locationsApiService.fetchAllLocations(pageLocaNumber)
             val prevLocaPage = if (pageLocaNumber > 0) pageLocaNumber - 1 else null
-            val nextLocaPage = if (locaResponse.body()?.info?.next != null) pageLocaNumber + 1 else null
+            val nextLocaPage = if (locaResponse.body()?.info?.next != null){
+                locaResponse.body()?.info?.next?.toUri()?.getQueryParameter("page")?.toInt()
+            }else null
 
             LoadResult.Page(
                 data = locaResponse.body()?.results ?: emptyList(),

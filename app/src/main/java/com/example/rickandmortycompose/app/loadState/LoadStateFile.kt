@@ -1,4 +1,4 @@
-package com.example.rickandmortycompose.data.paging3.loadState
+package com.example.rickandmortycompose.app.loadState
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

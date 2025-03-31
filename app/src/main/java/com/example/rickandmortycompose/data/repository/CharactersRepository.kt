@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.example.rickandmortycompose.data.api.CharacterApiService
 import com.example.rickandmortycompose.data.dto.characters.CharResults
-import com.example.rickandmortycompose.data.paging3.pagingSource.CharacterPagingSource
+import com.example.rickandmortycompose.data.pagingSource.character.CharacterPagingSource
 
 class CharactersRepository constructor(
     private val characterApiService: CharacterApiService
