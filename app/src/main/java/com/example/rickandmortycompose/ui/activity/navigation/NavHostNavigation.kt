@@ -106,7 +106,7 @@ fun NavHostNavigation() {
                 CenterAlignedTopAppBar(
                     modifier = Modifier,
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.Gray.copy(alpha = 0.3f)
+                        containerColor = Color.Black.copy(alpha = 0.3f)
                     ),
                     title = {
                         Text(
@@ -119,7 +119,8 @@ fun NavHostNavigation() {
         bottomBar = {
             if (showBottomBar) {
                 BottomAppBar(
-                    modifier = Modifier.height(100.dp)
+                    modifier = Modifier.height(100.dp),
+                    containerColor = Color.White.copy(alpha = 0.7f)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),

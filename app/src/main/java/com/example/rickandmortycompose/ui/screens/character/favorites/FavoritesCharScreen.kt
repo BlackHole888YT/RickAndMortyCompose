@@ -35,9 +35,9 @@ fun FavoritesCharScreen(
 ) {
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(16.dp)
         .background(Color.Gray)
     ) {
+        Spacer(modifier = Modifier.padding(top = 110.dp))
         Text(
             text = "Избранные персонажи",
             style = MaterialTheme.typography.headlineSmall,
